@@ -8,6 +8,7 @@ module.exports = {
   createUser: CRUD.DB.user.createUser,
   deleteUser: CRUD.DB.user.deleteUser,
   findUser: CRUD.DB.user.findUser,
+  isUser: CRUD.DB.user.isUser,
   updateUser: CRUD.DB.user.updateUser,
   createTicket: CRUD.DB.ticket.createTicket,
   deleteTicket: CRUD.DB.ticket.deleteTicket,

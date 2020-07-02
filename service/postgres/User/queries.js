@@ -8,17 +8,20 @@ module.exports = {
     WHERE id = '${idUser}'
   `,
   // TODO: Get info from tickets?
-  getUser: ({ idUser }) => `
+  getUser: ({ key, value }) => `
     SELECT *
     FROM users
-    WHERE id = ${idUser}
+    WHERE ${key} = ${value}
+  `,
+  isUser: ({ key, value }) => `
+    SELECT EXISTS(FROM users WHERE ${key} = ${value})
   `,
   updateUser: ({ idUser, userType, name, email, password }) => `
     UPDATE tickets
     SET
       ${userType ? `id_usertype = '${userType}',` : ''}
       ${name ? `name = '${name}',` : ''}
-      ${email ? `id_usertype = '${email}',` : ''}
+      ${email ? `email = '${email}',` : ''}
       ${password ? `password = '${password}',` : ''}
       updated_at = TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     WHERE id = '${idUser}'
