@@ -1,7 +1,7 @@
 {
   "name": "coolticket-server",
-  "version": "0.2.0",
-  "description": "server in NODE using Express",
+  "version": "0.2.1",
+  "description": "Server for tickets system!",
   "main": "index.js",
   "scripts": {
     "start": "pm2-runtime start ./server/ecosystem.config.js --env production",

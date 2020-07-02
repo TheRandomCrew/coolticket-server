@@ -9,7 +9,7 @@ const responseTime = require('response-time')
 const logger = require('../util/logger')
 
 const isProduction = process.env.NODE_ENV === 'production'
-const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081']
+const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:3000', 'https://coolticket-server.herokuapp.com']
 
 const productionURL = process.env.PRODUCTION_URL
 if (productionURL) allowedOrigins.push(productionURL)
@@ -26,7 +26,7 @@ const originUndefined = (req, _, next) => {
   ) {
     req.headers.origin = 'http://' + req.headers.host
   }
-  if (req.headers.host === 'azordev-auth.herokuapp.com') {
+  if (req.headers.host === 'coolticket-server.herokuapp.com') {
     req.headers.origin = 'https://' + req.headers.host
   }
   next()

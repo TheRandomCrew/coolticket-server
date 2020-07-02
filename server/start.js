@@ -3,6 +3,7 @@
 const http = require('http')
 const https = require('https')
 const logger = require('../util/logger')
+const { version, description } = require('../package.json')
 
 module.exports = app => {
   /**
@@ -18,7 +19,7 @@ module.exports = app => {
     .on('error', onError)
     .on('listening', onListening)
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'production') {
     /**
      * Create HTTPS server.
      */
@@ -31,6 +32,17 @@ module.exports = app => {
       .listen(httpsPort)
       .on('error', onError)
       .on('listening', onListening)
+  } else {
+    // Liked the banner? http://patorjk.com/software/taag/
+    logger.info(`                                                                     
+       _/_/_/                      _/  _/_/_/_/_/  _/            _/                    _/      
+    _/          _/_/      _/_/    _/      _/            _/_/_/  _/  _/      _/_/    _/_/_/_/   
+   _/        _/    _/  _/    _/  _/      _/      _/  _/        _/_/      _/_/_/_/    _/        
+  _/        _/    _/  _/    _/  _/      _/      _/  _/        _/  _/    _/          _/         
+   _/_/_/    _/_/      _/_/    _/      _/      _/    _/_/_/  _/    _/    _/_/_/      _/_/      
+        SERVER v${version} \n${description}
+        `)
+    logger.info(`App listening on http://localhost:${httpPort}/ping`)
   }
 
   /**
@@ -87,6 +99,5 @@ module.exports = app => {
       (typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`) +
       ` ${type}`
     logger.info(bind)
-    logger.info('App listening on http://localhost:8080/ping')
   }
 }
