@@ -2,16 +2,16 @@ const query = require('../connection')
 const queries = require('./queries')
 const logger = require('../../../util/logger')
 
-module.exports = async (idUser = '') => {
+module.exports = async (key = '', value = '') => {
   try {
-    if (!idUser) throw Error('You must provide an ID for the user!')
+    if (!key || !value) throw Error('You must provide key and value!')
     let user = {}
-    await query(queries.getUser, { idUser }, (err, res) => {
+    await query(queries.getUser, { [key]: value }, (err, res) => {
       if (err) {
         logger.warn(err)
         throw Error(err)
       }
-      user = { ...res, password: 'secret' }
+      user = res
     })
     logger.info(`User ${user} found!`)
     return {
