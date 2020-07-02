@@ -18,7 +18,7 @@ module.exports = async ({ email = '', name = '', password = '', userType = 'USER
         logger.warn(err)
         throw Error(err)
       }
-      newUser = res
+      newUser = { ...res, password: 'secret' }
     })
     logger.info(`User ${JSON.stringify(newUser)} created!`)
     return {

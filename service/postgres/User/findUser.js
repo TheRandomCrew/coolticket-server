@@ -11,7 +11,7 @@ module.exports = async (idUser = '') => {
         logger.warn(err)
         throw Error(err)
       }
-      user = res
+      user = { ...res, password: 'secret' }
     })
     logger.info(`User ${user} found!`)
     return {

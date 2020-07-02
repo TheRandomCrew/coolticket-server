@@ -19,10 +19,9 @@ module.exports = async ({ idUser, userType, name, email, password }) => {
           logger.warn(err)
           throw Error(err)
         }
-        updatedUser = user
+        updatedUser = { ...user, password: 'secret' }
       }
     )
-
     logger.info(`User ${idUser} updated!`)
     return {
       ok: true,
