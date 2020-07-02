@@ -1,0 +1,11 @@
+{
+    "watch": [
+      "api",
+      "server",
+      "service",
+      "util",
+      "index.js",
+      ".env"
+    ],
+    "ext": "js,json"
+  }
