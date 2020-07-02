@@ -1,6 +1,6 @@
 {
   "name": "coolticket-server",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Server for tickets system!",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,14 @@
     "swagger-ui-express": "^4.1.4",
     "winston": "^3.2.1"
   },
-  "author": "Israel Laguan <github.com/Israel-Laguan>",
+  "author": {
+    "name": "Israel Antonio Rosales Laguan",
+    "email": "contact@israellaguan.com",
+    "url": "http://israellaguan.com",
+    "GitHub": "https://github.com/Israel-Laguan",
+    "LinkedIn": "https://www.linkedin.com/in/israellaguan/",
+    "hireable": true
+  },
   "devDependencies": {
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
