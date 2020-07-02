@@ -2,7 +2,6 @@ const express = require('express')
 const userRouter = express.Router()
 const {
   root,
-  // getUserAll,
   postUser, // CREATE
   getUser, // READ
   putUser, // UPDATE
@@ -14,9 +13,8 @@ const {
 
 userRouter.get('/', root)
 userRouter.post('/', tokenVerification, postUser)
-// userRouter.get('/all', tokenVerification, getUserAll)
-userRouter.get('/:email', tokenVerification, getUser)
-userRouter.put('/:email', tokenVerification, putUser)
-userRouter.delete('/:email', tokenVerification, deleteUser)
+userRouter.get('/:idUser', tokenVerification, getUser)
+userRouter.put('/:idUser', tokenVerification, putUser)
+userRouter.delete('/:idUser', tokenVerification, deleteUser)
 
 module.exports = userRouter
