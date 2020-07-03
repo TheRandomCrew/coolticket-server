@@ -20,7 +20,7 @@ const postSignUp = async (req, res) => {
 
     const isEmailExists = await isUser('email', email)
 
-    if (isEmailExists.ok) {
+    if (isEmailExists.data) {
       return res.status(409).json({
         ok: false,
         msg: 'email already exists',
