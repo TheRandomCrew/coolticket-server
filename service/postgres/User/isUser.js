@@ -11,9 +11,10 @@ module.exports = async (key = '', value = '') => {
         logger.warn(err)
         throw Error(err)
       }
+      logger.info(`User exists? ${res}`)
       isUser = res
     })
-    logger.info(`User with${key} ${value} searched`)
+    logger.info(`User with ${key} ${value} searched and found!`)
     return {
       ok: true,
       data: isUser
