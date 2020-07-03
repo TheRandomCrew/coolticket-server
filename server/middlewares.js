@@ -9,7 +9,12 @@ const responseTime = require('response-time')
 const logger = require('../util/logger')
 
 const isProduction = process.env.NODE_ENV === 'production'
-const allowedOrigins = ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:3000', 'https://coolticket-server.herokuapp.com']
+const allowedOrigins = [
+  'http://localhost:8080',
+  'http://localhost:8081',
+  'http://localhost:3000',
+  'https://coolticket-server.herokuapp.com'
+]
 
 const productionURL = process.env.PRODUCTION_URL
 if (productionURL) allowedOrigins.push(productionURL)

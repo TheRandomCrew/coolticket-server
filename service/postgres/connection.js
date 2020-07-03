@@ -2,6 +2,9 @@ const { Pool } = require('pg')
 const logger = require('../../util/logger')
 
 const credentials = () => {
+  if (process.env.DATABASE_URL) {
+    return { connectionString: process.env.DATABASE_URL }
+  }
   return {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
@@ -12,7 +15,7 @@ const credentials = () => {
 }
 const pool = new Pool(credentials())
 
-pool.on('connect', client => {
+pool.on('connect', (client) => {
   client.query('SET DATESTYLE = iso, mdy')
   logger.info('Postgres DB Connected!')
 })

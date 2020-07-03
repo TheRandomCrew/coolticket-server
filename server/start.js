@@ -10,7 +10,7 @@ module.exports = app => {
    * Create HTTP server.
    */
   const httpPort = normalizePort(
-    process.env.PORT || process.env.PORT_HTTP || 8080
+    process.env.PORT_HTTP || 8080
   )
   const httpsPort = normalizePort(process.env.PORT || process.env.PORT_HTTPS || 8081)
   http
