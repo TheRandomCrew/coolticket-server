@@ -5,18 +5,18 @@ const logger = require('../../../util/logger')
 module.exports = async (key = '', value = '') => {
   try {
     if (!key || !value) throw Error('You must provide key and value!')
-    let exists = false
+    let user = {}
     await query(queries.getUser, { key, value }, (err, res) => {
       if (err) {
         logger.warn(err)
         throw Error(err)
       }
-      exists = res
+      user = res.data[0]
     })
-    logger.info(`User ${exists} found!`)
+    logger.info(`User ${user} found!`)
     return {
       ok: true,
-      data: exists
+      data: user
     }
   } catch (error) {
     logger.error(error)

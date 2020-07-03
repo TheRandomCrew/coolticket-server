@@ -11,7 +11,7 @@ module.exports = async ({ email = '', name = '', password = '', userType = 'USER
     await query(queries.createUser, {
       email,
       name,
-      userType: userType === 'ADMIN' ? 3 : 2,
+      userType: userType === 'ADMIN' ? 2 : 3,
       password: hashedPassword
     }, (err, res) => {
       if (err) {
