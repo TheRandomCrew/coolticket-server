@@ -11,7 +11,7 @@ module.exports = async (key = '', value = '') => {
         logger.warn(err)
         throw Error(err)
       }
-      exists = res.data[0].exists
+      exists = res
     })
     logger.info(`User ${exists} found!`)
     return {
