@@ -53,6 +53,7 @@ To get the Node server running locally:
 - Clone this repo
 - `npm install` to install all required dependencies
 - Download and install PostgreSQL ([instructions](https://www.postgresql.org/download/))
+- `set-db:prod` to leave DB ready for seeding. Note that this will wipe all existing data if it exists. It apply all the migrations: create tables, seed them and be ready for action! TODO: Add dev environment for DB
 - `npm run dev` to start the local server
 
 ## Code Overview

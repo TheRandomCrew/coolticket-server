@@ -1,6 +1,6 @@
 {
   "name": "coolticket-server",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Server for tickets system!",
   "main": "index.js",
   "scripts": {
@@ -9,14 +9,18 @@
     "test": "standard && jest --coverage -w=100%",
     "test:watch": "jest --watch -w=100%",
     "lint": "eslint . --cache -f table",
-    "lint-fix": "eslint . --fix -f table"
+    "lint-fix": "eslint . --fix -f table",
+    "set-db:dev": "",
+    "set-db:test": "",
+    "set-db:prod": "npm run db:reset && npm run db:migrate && echo 'DB Ready!'",
+    "db:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 db-migrate up -e prod",
+    "db:reset": "NODE_TLS_REJECT_UNAUTHORIZED=0 db-migrate reset -e prod"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
-    "db-migrate": "^0.11.11",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "express-promise-router": "^4.0.1",
@@ -41,6 +45,8 @@
     "hireable": true
   },
   "devDependencies": {
+    "db-migrate": "^0.11.11",
+    "db-migrate-pg": "^1.2.2",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
@@ -74,7 +80,7 @@
   },
   "homepage": "https://github.com/Israel-Laguan/coolticket-server#readme",
   "engines": {
-    "node": "^12.0.0",
+    "node": "^12.18.0",
     "npm": "^6.14.4"
   }
 }

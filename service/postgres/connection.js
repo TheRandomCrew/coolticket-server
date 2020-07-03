@@ -3,14 +3,18 @@ const logger = require('../../util/logger')
 
 const credentials = () => {
   if (process.env.DATABASE_URL) {
-    return { connectionString: process.env.DATABASE_URL }
+    return {
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false }
+    }
   }
   return {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
     port: process.env.DB_PORT,
-    password: process.env.DB_PASSWORD
+    password: process.env.DB_PASSWORD,
+    ssl: true
   }
 }
 const pool = new Pool(credentials())

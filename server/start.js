@@ -5,34 +5,32 @@ const https = require('https')
 const logger = require('../util/logger')
 const { version, description } = require('../package.json')
 
-module.exports = app => {
-  /**
-   * Create HTTP server.
-   */
+module.exports = (app) => {
   const httpPort = normalizePort(
-    process.env.PORT_HTTP || 8080
+    process.env.PORT || process.env.PORT_HTTP || 8383
   )
-  const httpsPort = normalizePort(process.env.PORT || process.env.PORT_HTTPS || 8081)
+  const httpsPort = normalizePort(
+    process.env.PORT || process.env.PORT_HTTPS || 8081
+  )
   http
     .createServer(app)
     .listen(httpPort)
     .on('error', onError)
     .on('listening', onListening)
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     /**
      * Create HTTPS server.
      */
     const options = {
-    //   cert: fs.readFileSync('cert/cert.pem') || null,
-    //   key: fs.readFileSync('cert/key.pem') || null
+      //   cert: fs.readFileSync('cert/cert.pem') || null,
+      //   key: fs.readFileSync('cert/key.pem') || null
     }
     https
       .createServer(options, app)
       .listen(httpsPort)
       .on('error', onError)
       .on('listening', onListening)
-  } else {
     // Liked the banner? http://patorjk.com/software/taag/
     logger.info(`                                                                     
        _/_/_/                      _/  _/_/_/_/_/  _/            _/                    _/      
