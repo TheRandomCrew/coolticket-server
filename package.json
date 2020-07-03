@@ -1,6 +1,6 @@
 {
   "name": "coolticket-server",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Server for tickets system!",
   "main": "index.js",
   "scripts": {

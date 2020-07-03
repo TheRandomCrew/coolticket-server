@@ -14,7 +14,7 @@ module.exports = {
     WHERE ${key} = ${value}
   `,
   isUser: ({ key, value }) => `
-    SELECT EXISTS(FROM users WHERE ${key} = ${value})
+    SELECT EXISTS(SELECT 1 FROM users WHERE ${key} = ${value})
   `,
   updateUser: ({ idUser, userType, name, email, password }) => `
     UPDATE tickets

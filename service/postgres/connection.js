@@ -65,7 +65,6 @@ const query = async (query, variables, callback) => {
     })
   } catch (error) {
     logger.error(`DB Query Internal Error:\n${error.message}\n${error.stack}`)
-    pool.end()
     callback(error, {
       ok: false,
       data: error.message

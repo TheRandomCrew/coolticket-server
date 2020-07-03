@@ -11,7 +11,7 @@
     }
   ],
   "info": {
-    "version": "0.3.0-oas3",
+    "version": "0.4.1-oas3",
     "title": "🎟️ CoolTicket Server",
     "description": "# Server to provide Auth and Ticket CRUD\n\n![Logo](https://img.icons8.com/clouds/100/000000/ticket.png)\n\nProvide TOKEN and manage Users REST API. Manage Tickets for Frontend!"
   },
