@@ -6,7 +6,7 @@ module.exports = async (key = '', value = '') => {
   try {
     if (!key || !value) throw Error('You must provide key and value!')
     let user = {}
-    await query(queries.getUser, { [key]: value }, (err, res) => {
+    await query(queries.getUser, { key, value }, (err, res) => {
       if (err) {
         logger.warn(err)
         throw Error(err)
