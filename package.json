@@ -10,11 +10,11 @@
     "test:watch": "jest --watch -w=100%",
     "lint": "eslint . --cache -f table",
     "lint-fix": "eslint . --fix -f table",
-    "set-db:dev": "",
-    "set-db:test": "",
-    "set-db:prod": "npm run db:reset && npm run db:migrate && echo 'DB Ready!'",
-    "db:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 db-migrate up -e prod",
-    "db:reset": "NODE_TLS_REJECT_UNAUTHORIZED=0 db-migrate reset -e prod"
+    "set-db:dev": "NODE_ENV=development npm run db:reset dev && npm run db:migrate dev && echo 'DB Ready!'",
+    "set-db:test": "NODE_ENV=test npm run db:reset test && npm run db:migrate test && echo 'DB Ready!'",
+    "set-db:prod": "npm run db:reset prod && npm run db:migrate prod && echo 'DB Ready!'",
+    "db:migrate": "NODE_TLS_REJECT_UNAUTHORIZED=0 db-migrate up -e ",
+    "db:reset": "NODE_TLS_REJECT_UNAUTHORIZED=0 db-migrate reset -e "
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

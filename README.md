@@ -10,7 +10,8 @@
 <div align="center">
   <img src="https://img.icons8.com/clouds/100/000000/ticket.png" alt="Logo"/>
   <div align="center">
-    <p>Ticket Reservation System</p>
+    <h2>Ticket Reservation System</h2>
+    <p>RESTful server powered by PostgreSQL and Express.js</p>
 	🖊️🐞
     <a href="https://github.com/Israel-Laguan/coolticket-server/issues">Report a Bug</a>
     🙋‍♂️
@@ -25,6 +26,7 @@ Live at [coolticket-server.herokuapp.com](https://coolticket-server.herokuapp.co
 - [CoolTicket Server](#coolticket-server)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
+  - [Important Endpoints:](#important-endpoints)
   - [Getting started](#getting-started)
   - [Code Overview](#code-overview)
     - [Dependencies](#dependencies)
@@ -46,13 +48,63 @@ Live at [coolticket-server.herokuapp.com](https://coolticket-server.herokuapp.co
 ![postgres][]
 ![heroku][]
 
+## Important Endpoints:
+
+- GET `/`
+- POST `/signin` -  (email, password)
+- `/signup` - POST (email, password)
+- `/user` - GET (protected)
+
 ## Getting started
 
-To get the Node server running locally:
+To get the Node server running locally (I assume using Linux or Mac, but it's similar in Windows):
 
 - Clone this repo
-- `npm install` to install all required dependencies
-- Download and install PostgreSQL ([instructions](https://www.postgresql.org/download/))
+
+```sh
+git clone https://github.com/Israel-Laguan/coolticket-server.git
+```
+
+- Install all required dependencies
+
+```sh
+> yarn install
+# or
+> npm i
+```
+
+- Add or modify project's `.env` with the info from your local DB (check [.env example](.env.example)).
+
+  ```sh
+  DB_HOST=
+  DB_DATABASE=
+  DB_USER=
+  DB_PORT=
+  DB_PASSWORD=
+  DATABASE_URL= # This space is for heroku DBs
+  JWT_SECRET= # Here you can add a super hard to figure out secret for JWT
+  PRODUCTION_URL= # Add a link to whitelist, expected production URL
+  ```
+
+  Notice that you have to fill for 3 DBs, one for each environment.
+
+- OPTION 1: Run your own DB
+  - Download and install PostgreSQL ([instructions](https://www.postgresql.org/download/))
+  - Make sure you have installed PostgreSQL server by running
+
+    ```sh
+    > psql
+    # You should see this new prompt:
+    postgres=#
+    # Verify you have access and can run queries
+    postgres=# SELECT version();
+    # Should return POSTGRES version and some extra info
+    # Now, Exit using this:
+    postgres=# \q
+    ```
+
+- OPTION 2: Use an online DB (like [Heroku's](https://www.heroku.com/postgres))
+  - Basically just spin an instance and copy the credentials in the project's env
 - `set-db:prod` to leave DB ready for seeding. Note that this will wipe all existing data if it exists. It apply all the migrations: create tables, seed them and be ready for action! TODO: Add dev environment for DB
 - `npm run dev` to start the local server
 
@@ -67,10 +119,11 @@ To get the Node server running locally:
 
 ### Application Structure
 
-- `index.js` - The entry point to our application. This file defines our express server and connects it to all the middlewares needed. It also requires the routes and models we'll be using in the application.
-- `server/` - This folder contains configuration for the app as well as a central location for configuration/environment variables.
-- `api/` - This folder contains the route definitions for our API.
-- `service/` - This folder contains the actions and queries for each Table.
+- `index.js` The entry point to our application. This file defines our express server and connects it to all the middlewares needed. It also requires the routes and models we'll be using in the application.
+- `api/` This folder contains the route definitions for our API.
+- `migrations/` Here we have some migrations (in SQL for easy portability) to run before start the server.
+- `server/` This folder contains configuration for the app as well as a central location for configuration/environment variables.
+- `service/` This folder contains the actions and queries for each Table.
 
 ### Error Handling
 

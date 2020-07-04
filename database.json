@@ -1,12 +1,16 @@
 {
-  "sql-file" : true,
+  "sql-file": true,
   "dev": {
-    "driver": "sqlite3",
-    "filename": "~/dev.db"
+    "driver": "pg",
+    "ENV": "DEV_DATABASE_URL",
+    "ssl": "true",
+    "schema": "coolticket"
   },
   "test": {
-    "driver": "sqlite3",
-    "filename": ":memory:"
+    "driver": "pg",
+    "ENV": "TEST_DATABASE_URL",
+    "ssl": "true",
+    "schema": "coolticket"
   },
   "prod": {
     "driver": "pg",
