@@ -5,8 +5,11 @@ const swaggerDocument = require('./openapi.json')
 
 const system = express.Router()
 
+system.use(express.static('public'))
 system.use('/', swaggerUi.serve)
-system.get('/', swaggerUi.setup(swaggerDocument))
+system.get('/', swaggerUi.setup(swaggerDocument, {
+  customeSiteTitle: 'CoolTicket Documentation'
+}))
 system.get('/ping', ping)
 
 module.exports = system

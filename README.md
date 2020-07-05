@@ -153,7 +153,9 @@ For more information about the code please check the [code overview](docs/CODE_O
 [![contributions welcome][contributions-welcome]][issues-url]
 
 🤝 Contributions, issues and feature requests are welcome!
-Feel free to check the [issues page][issues-url].
+Feel free to check the [issues page][issues-url]. Be sure to review the [contributing guidelines](./docs/CONTRIBUTING.md).
+
+Happy programming :smiley: :v:
 
 ## Show your support
 
