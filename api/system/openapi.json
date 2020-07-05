@@ -1,0 +1,1054 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "description": "CoolTicket Server",
+      "url": "https://coolticket-server.herokuapp.com"
+    },
+    {
+      "description": "CoolTicket Server DEV",
+      "url": "http://localhost:8080"
+    }
+  ],
+  "info": {
+    "version": "0.4.1-oas3",
+    "title": "🎟️ CoolTicket Server",
+    "description": "# Server to provide Auth and Ticket CRUD\n\n![Logo](https://img.icons8.com/clouds/100/000000/ticket.png)\n\nProvide TOKEN and manage Users REST API. Manage Tickets for Frontend!"
+  },
+  "security": [
+    {
+      "api_key": [
+        "read",
+        "write"
+      ]
+    }
+  ],
+  "paths": {
+    "/ping": {
+      "get": {
+        "summary": "Server heartbeat operation",
+        "description": "This operation shows current *status* of server.<br/> If `200` then all ok, if `500` a problem is there.<br/> __Dev Oriented Endpoint__",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Ok"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/api/v1/auth": {
+      "summary": "Get info about Endpoint",
+      "description": "Return info",
+      "get": {
+        "summary": "get Info about /auth Endpoint",
+        "description": "Introspection for this resource",
+        "operationId": "getAuth",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Info"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "summary": "Get jwt token with your email and password",
+      "description": "Send me your credentials, I'll tell you if you can enter",
+      "post": {
+        "operationId": "postAuthLogin",
+        "summary": "Validate your user",
+        "description": "Given email and password, create and return jwt token and DB id",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Login"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Login200"
+          },
+          "401": {
+            "description": "email or password is wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/Email409"
+          },
+          "422": {
+            "description": "Errors in Validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/signup": {
+      "summary": "Create user in database of Users",
+      "description": "If you want access come here first",
+      "post": {
+        "operationId": "postAuthSignup",
+        "summary": "Register to get access",
+        "description": "Give an name, an email, and a password, we register all in our databases",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Signup"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/SignUp201"
+          },
+          "409": {
+            "$ref": "#/components/responses/Email409"
+          },
+          "422": {
+            "description": "Errors in Validation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/validate": {
+      "summary": "Validate your jwt token",
+      "description": "If you have a invalid token or it expired already, come here",
+      "post": {
+        "operationId": "postAuthValidate",
+        "summary": "Validate your token",
+        "description": "Given a token, check token validity and return state",
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JWT"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "token is valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Login200"
+                }
+              }
+            }
+          },
+          "307": {
+            "description": "Token about to expire",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/user": {
+      "summary": "User related operations",
+      "description": "I dont have  id here",
+      "get": {
+        "summary": "Info about /user Endpoint",
+        "description": "Introspection for this resource",
+        "operationId": "getUser",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Info"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "post": {
+        "operationId": "postUser",
+        "summary": "CREATE an User by request",
+        "description": "TODO Add the role LATER",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JWT"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserCreate201"
+          },
+          "409": {
+            "$ref": "#/components/responses/Email409"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/ClientError"
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/User"
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v1/user/{idUser}": {
+      "summary": "operations in User from specific email",
+      "description": "Need to have a valid token",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/JWT"
+        },
+        {
+          "$ref": "#/components/parameters/IdUser"
+        }
+      ],
+      "get": {
+        "operationId": "getUserId",
+        "summary": "READ info about certain user",
+        "description": "provide an email (and a valid token) to get the info of the user the id belongs",
+        "responses": {
+          "200": {
+            "description": "The User Object returned successfuly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User201"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No user found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "put": {
+        "operationId": "putUser",
+        "summary": "UPDATE user",
+        "description": "Modify current info of user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/User"
+        },
+        "responses": {
+          "201": {
+            "description": "The User Object Updated successfuly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User201"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "delete": {
+        "operationId": "deleteUser",
+        "summary": "DELETE the user",
+        "description": "Give an ID and I will delete the user that belongs to",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Ok"
+          },
+          "404": {
+            "description": "BAD_REQUEST_ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/api/v1/ticket": {
+      "summary": "Ticket related operations",
+      "description": "I dont have  id here",
+      "get": {
+        "summary": "Info about /ticket Endpoint",
+        "description": "Introspection for this resource",
+        "operationId": "getTicket",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Info"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "ticket"
+        ]
+      },
+      "post": {
+        "operationId": "postTicket",
+        "summary": "CREATE an ticket by request",
+        "description": "TODO Add the role LATER",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JWT"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/UserCreate201"
+          },
+          "409": {
+            "$ref": "#/components/responses/Email409"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/ClientError"
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Ticket"
+        },
+        "tags": [
+          "ticket"
+        ]
+      }
+    },
+    "/api/v1/ticket/{ticketId}": {
+      "summary": "operations in ticket from specific id",
+      "description": "Need to have a valid token",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/JWT"
+        },
+        {
+          "$ref": "#/components/parameters/TicketId"
+        }
+      ],
+      "put": {
+        "operationId": "putTicket",
+        "summary": "UPDATE ticket",
+        "description": "Modify current info of ticket",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Ticket"
+        },
+        "responses": {
+          "201": {
+            "description": "The Ticket Object Updated successfuly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User201"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "ticket"
+        ]
+      },
+      "delete": {
+        "operationId": "deleteTicket",
+        "summary": "DELETE the ticket",
+        "description": "Give an ID and I will delete the ticket that belongs to",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Ok"
+          },
+          "404": {
+            "description": "BAD_REQUEST_ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "ticket"
+        ]
+      }
+    },
+    "/api/v1/ticket/all": {
+      "summary": "Pertains all the ticket",
+      "description": "Operations made with all the ticket",
+      "get": {
+        "operationId": "getTicketAll",
+        "summary": "Get a list of all ticket",
+        "description": "Returns an array of all ticket registered",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/JWT"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The ticket Array returns successfuly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Users201"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "BAD_REQUEST_ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientError"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "tags": [
+          "ticket"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "system",
+      "description": "Non business logic"
+    },
+    {
+      "name": "auth",
+      "description": "Login and Signup"
+    },
+    {
+      "name": "user",
+      "description": "CRUD operations on Users database"
+    },
+    {
+      "name": "ticket",
+      "description": "CRUD operations on Tickets database"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "email",
+            "example": "example@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "password with more than 8 and less than 12 alphanumeric",
+            "example": "password123"
+          }
+        }
+      },
+      "Signup": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name with more than 3 letters",
+            "example": "your-name"
+          },
+          "email": {
+            "type": "string",
+            "description": "email",
+            "example": "example@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "password with more than 8 and less than 12 alphanumeric symbols",
+            "example": "password123"
+          },
+          "userType": {
+            "type": "string",
+            "description": "Type of User: \n* `ADMIN` Higher order, deletes and creates USERs\n* `USER` The ones controling systems\n",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "example": "USER"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name with more than 3 letters",
+            "example": "John Doe",
+            "minLength": 3
+          },
+          "email": {
+            "type": "string",
+            "description": "email",
+            "example": "example@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "password with more than 6 and less than 12 alphanumeric symbols",
+            "example": "password123",
+            "minLength": 6,
+            "maxLength": 12
+          },
+          "userType": {
+            "type": "string",
+            "description": "Type of User: \n* `ADMIN` Higher order, deletes and creates USERs\n* `USER` The ones controling systems\n",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "example": "USER"
+          }
+        },
+        "xml": {
+          "name": "User"
+        }
+      },
+      "Ticket": {
+        "type": "object",
+        "properties": {
+          "idUser": {
+            "type": "string"
+          },
+          "ticketRequest": {
+            "type": "string"
+          }
+        }
+      },
+      "Ok": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "data": {
+            "type": "object",
+            "description": "object with valuable data"
+          }
+        }
+      },
+      "ServerError": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "errors": {
+            "description": "object with valuable data",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Describe the error",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "ok": false,
+          "msg": "Internal Server Error",
+          "errors": [
+            {
+              "msg": "error1"
+            },
+            {
+              "msg": "error2"
+            },
+            "...otherErrors"
+          ]
+        }
+      },
+      "ClientError": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string"
+          },
+          "errors": {
+            "description": "object with valuable data",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Describe the error",
+              "properties": {
+                "msg": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "ok": false,
+          "msg": "Client Sent Incorrect or incomplete Data",
+          "errors": [
+            {
+              "msg": "error1"
+            },
+            {
+              "msg": "error2"
+            },
+            "...otherErrors"
+          ]
+        }
+      },
+      "Login200": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "data": {
+            "type": "object",
+            "description": "object with valuable data",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "token": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "User201": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "data": {
+            "type": "object",
+            "description": "object with valuable data",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Users201": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Info": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string",
+            "description": "Explanatory message"
+          },
+          "docsUrl": {
+            "type": "string",
+            "description": "Where to find help"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Login": {
+        "description": "User object",
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/Login"
+            }
+          },
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Login"
+            }
+          }
+        }
+      },
+      "Signup": {
+        "description": "User object",
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/Signup"
+            }
+          },
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Signup"
+            }
+          }
+        }
+      },
+      "User": {
+        "description": "User object",
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "Ticket": {
+        "description": "ticket object",
+        "required": true,
+        "content": {
+          "application/x-www-form-urlencoded": {
+            "schema": {
+              "$ref": "#/components/schemas/Ticket"
+            }
+          },
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Ticket"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "ServerError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ServerError"
+            }
+          }
+        }
+      },
+      "ClientError": {
+        "description": "Client Sent Incorrect or incomplete Data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ClientError"
+            }
+          }
+        }
+      },
+      "Email409": {
+        "description": "Email already exists",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ClientError"
+            }
+          }
+        }
+      },
+      "Ok": {
+        "description": "The petition returned successfuly",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Ok"
+            }
+          }
+        }
+      },
+      "Login200": {
+        "description": "User Log in successfully (Credentials email, token and id inside of data)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Login200"
+            }
+          }
+        }
+      },
+      "SignUp201": {
+        "description": "User Sign Up successfully (Credentials email, name and password inside of data)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User201"
+            }
+          }
+        }
+      },
+      "UserCreate201": {
+        "description": "User Created Successfuly",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User201"
+            }
+          }
+        }
+      },
+      "Info": {
+        "description": "Info about this path",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Info"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    },
+    "parameters": {
+      "JWT": {
+        "in": "header",
+        "name": "x-access-token",
+        "description": "jwt Token given in /login step",
+        "schema": {
+          "type": "string"
+        },
+        "required": true
+      },
+      "IdUser": {
+        "name": "idUser",
+        "in": "path",
+        "description": "ID of user",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "TicketId": {
+        "name": "ticketId",
+        "in": "path",
+        "description": "ID of ticket to return",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "name": "coolticket-server",
+  "version": "0.5.0",
+  "description": "Server for tickets system!",
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2-runtime start ./server/ecosystem.config.js --env production",
+    "dev": "NODE_ENV=development nodemon -r dotenv/config index.js",
+    "test": "cross-env NODE_ENV=test standard 'api/**/*.js' 'server/**/*.js' 'service/**/*.js' 'util/**/*.js' && jest --coverage -w=100%",
+    "test:watch": "cross-env NODE_ENV=test jest --watch -w=100%",
+    "lint": "eslint . --cache -f table",
+    "lint-fix": "eslint . --fix -f table",
+    "set-db:dev": "cross-env NODE_ENV=development npm run db:reset dev && npm run db:migrate dev && echo 'DB Ready!'",
+    "set-db:test": "cross-env NODE_ENV=test npm run db:reset test && npm run db:migrate test && echo 'DB Ready!'",
+    "set-db:prod": "cross-env npm run db:reset prod && npm run db:migrate prod && echo 'DB Ready!'",
+    "db:migrate": "cross-env-shell NODE_TLS_REJECT_UNAUTHORIZED=0 db-migrate up -e ",
+    "db:reset": "cross-env-shell NODE_TLS_REJECT_UNAUTHORIZED=0 db-migrate reset -e "
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "express-promise-router": "^4.0.1",
+    "express-rate-limit": "^5.1.1",
+    "express-validator": "^6.4.0",
+    "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.2.1",
+    "pm2": "^4.2.3",
+    "response-time": "^2.3.2",
+    "swagger-ui-express": "^4.1.4",
+    "winston": "^3.2.1"
+  },
+  "author": {
+    "name": "Israel Antonio Rosales Laguan",
+    "email": "contact@israellaguan.com",
+    "url": "http://israellaguan.com",
+    "GitHub": "https://github.com/Israel-Laguan",
+    "LinkedIn": "https://www.linkedin.com/in/israellaguan/",
+    "hireable": true
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "db-migrate": "^0.11.11",
+    "db-migrate-pg": "^1.2.2",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.2.6",
+    "nodemon": "^2.0.2",
+    "standard": "^14.3.3",
+    "supertest": "^4.0.2"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "postgresql",
+    "pm2",
+    "migrations",
+    "backend",
+    "middlewares",
+    "API",
+    "eslint",
+    "vscode"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Israel-Laguan/coolticket-server.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Israel-Laguan/coolticket-server/issues"
+  },
+  "homepage": "https://github.com/Israel-Laguan/coolticket-server#readme",
+  "engines": {
+    "node": "^12.18.0",
+    "npm": "^6.14.4"
+  }
+}
