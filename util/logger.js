@@ -15,7 +15,7 @@ const logger = createLogger({
       info.level = info.level.toUpperCase()
       return info
     })(),
-    format.colorize({ all: true }),
+    format.colorize({ all: process.env.NODE_ENV !== 'production' }),
     format.timestamp({
       format: 'YYYY-MM-DD HH:mm'
     }),
