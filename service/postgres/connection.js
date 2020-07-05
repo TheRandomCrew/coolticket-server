@@ -4,8 +4,8 @@ const credentials = require('./credentials')
 
 const pool = new Pool(credentials())
 
-pool.on('connect', (client) => {
-  client.query('SET DATESTYLE = iso, mdy')
+pool.on('connect', async (client) => {
+  await client.query('SET DATESTYLE = iso, mdy')
   logger.info('Postgres DB Connected!')
 })
 // the pool will emit an error on behalf of any idle clients

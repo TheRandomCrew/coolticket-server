@@ -11,7 +11,7 @@ const logger = require('../util/logger')
 const isProduction = process.env.NODE_ENV === 'production'
 const allowedOrigins = [
   'http://localhost:8080',
-  'http://localhost:8081',
+  'http://localhost:8383',
   'http://localhost:3000',
   'https://coolticket-server.herokuapp.com'
 ]
@@ -27,7 +27,7 @@ const originUndefined = (req, _, next) => {
   }
   if (
     req.headers.host === 'localhost:8080' ||
-    req.headers.host === 'localhost:8081'
+    req.headers.host === 'localhost:8383'
   ) {
     req.headers.origin = 'http://' + req.headers.host
   }
@@ -48,6 +48,7 @@ module.exports = (app) => {
     originUndefined,
     cors({
       origin: (origin, next) => {
+        if (process.env.NODE_ENV === 'test') return next()
         if (allowedOrigins.indexOf(origin) > -1) {
           next(null, true)
         } else {

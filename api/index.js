@@ -13,7 +13,9 @@ module.exports = (server) => {
     server.use('/', system)
     server.use('/api', versionController)
     server.use('/api', limiter)
+    return server
   } catch (error) {
     service.logger.error(error)
+    process.exit(1)
   }
 }

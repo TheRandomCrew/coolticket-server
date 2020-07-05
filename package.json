@@ -1,13 +1,13 @@
 {
   "name": "coolticket-server",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Server for tickets system!",
   "main": "index.js",
   "scripts": {
     "start": "pm2-runtime start ./server/ecosystem.config.js --env production",
     "dev": "NODE_ENV=development nodemon -r dotenv/config index.js",
-    "test": "standard && jest --coverage -w=100%",
-    "test:watch": "jest --watch -w=100%",
+    "test": "cross-env NODE_ENV=test standard 'api/**/*.js' 'server/**/*.js' 'service/**/*.js' 'util/**/*.js' && jest --coverage -w=100%",
+    "test:watch": "cross-env NODE_ENV=test jest --watch -w=100%",
     "lint": "eslint . --cache -f table",
     "lint-fix": "eslint . --fix -f table",
     "set-db:dev": "cross-env NODE_ENV=development npm run db:reset dev && npm run db:migrate dev && echo 'DB Ready!'",

@@ -1,4 +1,6 @@
 module.exports = {
+  testEnvironment: 'node',
+  testURL: 'http://localhost',
   collectCoverageFrom: [
     'index.js',
     '!node_modules/**',

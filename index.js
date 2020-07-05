@@ -1,6 +1,6 @@
 const server = require('./server')
-const boot = require('./server/start')
 const api = require('./api')
+const boot = require('./server/start')
 
-api(server)
-boot(server)
+const withAPI = api(server)
+boot(withAPI)
