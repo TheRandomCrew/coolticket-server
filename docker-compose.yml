@@ -1,0 +1,29 @@
+version: '2.1'
+
+services:
+  api:
+    build: .
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: test
+      DB_NAME: test
+      DB_HOSTNAME: db
+      JWT_SECRET: S3cre+
+      PRODUCTION_URL: https://coolticket.herokuapp.com
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:10
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
+      ALLOW_IP_RANGE: 0.0.0.0/0
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
