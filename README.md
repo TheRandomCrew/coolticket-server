@@ -12,27 +12,23 @@
   <div align="center">
     <h2>Ticket Reservation System</h2>
     <p>RESTful server powered by PostgreSQL and Express.js</p>
-	🖊️🐞
+    🖊️🐞
     <a href="https://github.com/Israel-Laguan/coolticket-server/issues">Report a Bug</a>
     🙋‍♂️
     <a href="https://github.com/Israel-Laguan/coolticket-server/issues">Request Feature</a>
   </div>
 </div>
 
-Live at [coolticket-server.herokuapp.com](https://coolticket-server.herokuapp.com/)
+Live at [coolticket-server.herokuapp.com][live]
 
 ## Table of Contents
 
 - [CoolTicket Server](#coolticket-server)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
-  - [Important Endpoints:](#important-endpoints)
+  - [How to use it](#how-to-use-it)
   - [Getting started](#getting-started)
   - [Code Overview](#code-overview)
-    - [Dependencies](#dependencies)
-    - [Application Structure](#application-structure)
-    - [Error Handling](#error-handling)
-    - [Authentication](#authentication)
   - [Author](#author)
   - [Contributing](#contributing)
   - [Show your support](#show-your-support)
@@ -40,98 +36,70 @@ Live at [coolticket-server.herokuapp.com](https://coolticket-server.herokuapp.co
 
 ## Features
 
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
-
 [![Framework][badge-framework]][framework-url]
 ![javascript][]
 ![nodejs][]
 ![postgres][]
 ![heroku][]
 
-## Important Endpoints:
+- Async/Await support
+- WinstonJs Logger Implementation
+- Error Handling
+- Postgres Migrations and Seed Support
+- Basic request parameters Validation
+- Open Api Specification implemented through swagger and swagger-ui
+- JWT implementation
+- Enviroment variables to hold configuration values `.env` file
+- Functional Programming with Middlewares and helpers
+- Standard Coding with Eslint and Prettier, this helps to keep thing into prespective.
 
-- GET `/`
-- POST `/signin` -  (email, password)
-- `/signup` - POST (email, password)
-- `/user` - GET (protected)
+[![JavaScript Style Guide][badge-standard]][standard-style]
+
+## How to use it
+
+This code is meant to be run in a server accesible online, so other services can use it, in this case a ticket frontend. This is a Rest Api solution using basic database create, read, update and delete operations (CRUD) as well as a basic token (JWT) generator/validator.
+
+I use a RESTful API to be used by any other client, but for human readability I also added `swagger` (it can even be used as an ad hoc admin panel!). To use it from a client you need to make HTPP(S) requests, for example using `curl`:
+
+```sh
+> curl https://coolticket-server.herokuapp.com/ping -v
+> curl -d "email=example&password=example2" https://coolticket-server.herokuapp.com/api/v1/auth/login
+```
+
+But you can use any language or library: PHP, GO, C++, Rust, etc. The only unique point is how to manage the JWT. I decided to use a header named `x-access-token`, in order to avoid a normal way to check for tokens: `Autorization: Bearer` header. This is just an extra security measure. To send a JWT token for a request in a protected endpoint, you MUST use `x-access-token` header.
+
+Some interesting endpoints:
+
+- GET `/` - Swagger Documentation
+- POST `api/v1/auth/login` -  (email, password) Get a JWT
+- POST `api/v1/auth/signup` -  (email, password, name, userType) Create a new User
+- GET `/api/v1/tickets/all` - (protected by JWT) Get all the tickets
+
+More info in the swagger documentation [Live Here][live]
 
 ## Getting started
 
-To get the Node server running locally (I assume using Linux or Mac, but it's similar in Windows):
-
-- Clone this repo
+- Be sure to setup `docker-compose` and have `git`.
 
 ```sh
-git clone https://github.com/Israel-Laguan/coolticket-server.git
+> git clone https://github.com/Israel-Laguan/coolticket-server.git
+> cd coolticket-server
+> docker-compose up
 ```
 
-- Install all required dependencies
+Enter [localhost:8080][] in a browser for the Swagger documentation of the server.
 
-```sh
-> yarn install
-# or
-> npm i
-```
-
-- Add or modify project's `.env` with the info from your local DB (check [.env example](.env.example)).
-
-  ```sh
-  DB_HOST=
-  DB_DATABASE=
-  DB_USER=
-  DB_PORT=
-  DB_PASSWORD=
-  DATABASE_URL= # This space is for heroku DBs
-  JWT_SECRET= # Here you can add a super hard to figure out secret for JWT
-  PRODUCTION_URL= # Add a link to whitelist, expected production URL
-  ```
-
-  Notice that you have to fill for 3 DBs, one for each environment.
-
-- OPTION 1: Run your own DB
-  - Download and install PostgreSQL ([instructions](https://www.postgresql.org/download/))
-  - Make sure you have installed PostgreSQL server by running
-
-    ```sh
-    > psql
-    # You should see this new prompt:
-    postgres=#
-    # Verify you have access and can run queries
-    postgres=# SELECT version();
-    # Should return POSTGRES version and some extra info
-    # Now, Exit using this:
-    postgres=# \q
-    ```
-
-- OPTION 2: Use an online DB (like [Heroku's](https://www.heroku.com/postgres))
-  - Basically just spin an instance and copy the credentials in the project's env
-- `set-db:prod` to leave DB ready for seeding. Note that this will wipe all existing data if it exists. It apply all the migrations: create tables, seed them and be ready for action! TODO: Add dev environment for DB
-- `npm run dev` to start the local server
+Not a fan of Docker or need more information? Visit the [installation instructions](docs/INSTALLATION.md) to learn more about how to setup your PC for run the server!
 
 ## Code Overview
 
-### Dependencies
+This backend's code is made using JavaScript language, and [Node.js](nodejs.org) runtime. With a package named Express.js I managed to create the server, routers and middleware necesary. Also PostgreSQL is used to provide a modern, open sourced and perfomant database layer. Lastly, the server have auxiliar packages for development and deployment to ensure is production ready, enterprise level.
 
-- [expressjs](https://github.com/expressjs/express) - The server for handling and routing HTTP requests
-- [express-jwt](https://github.com/auth0/express-jwt) - Middleware for validating JWTs for authentication
-- [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) - For generating JWTs used by authentication
-- [node-postgres](https://github.com/brianc/node-postgres) - For connect to a postgres DB
+As with most of node.js applications, we would want to install node and npm in our local PC in order to run the server or develop code. This folder include all the necesary files to run the server local or online, just take into account that you'll need to use a terminal as no GUI is available yet.
 
-### Application Structure
+If you want to develop you have to setup a good dev environment. First of all a good text editor/IDE, I prefer to use Visual Studio Code, but you can use anything else. For the use of VSCode I provide configuration files in the hidden folder `.vscode`.
 
-- `index.js` The entry point to our application. This file defines our express server and connects it to all the middlewares needed. It also requires the routes and models we'll be using in the application.
-- `api/` This folder contains the route definitions for our API.
-- `migrations/` Here we have some migrations (in SQL for easy portability) to run before start the server.
-- `server/` This folder contains configuration for the app as well as a central location for configuration/environment variables.
-- `service/` This folder contains the actions and queries for each Table.
-
-### Error Handling
-
-In `api/v1/index.js`, we define a error-handling middleware for handling inputs: `ValidationError`. This middleware will respond with a 422 status code and format the response to have error messages the clients can understand
-
-### Authentication
-
-Requests are authenticated using the `Authorization` header with a valid JWT. We define two express middlewares in `service/auth.js` that can be used to authenticate requests. The `required` middleware configures the `express-jwt` middleware using our application's secret and will return a 401 status code if the request cannot be authenticated. The payload of the JWT can then be accessed from `req.payload` in the endpoint. The `optional` middleware configures the `express-jwt` in the same way as `required`, but will *not* return a 401 status code if the request cannot be authenticated.
+For more information about the code please check the [code overview](docs/CODE_OVERVIEW.md).
 
 ## Author
 
@@ -223,3 +191,7 @@ Feel free to fork this project and improve it
 [apache-license]: https://opensource.org/licenses/Apache-2.0
 [Icons8]: https://icons8.com/
 [icons8-logo]: https://img.icons8.com/fluent/20/000000/icons8-new-logo.png
+[live]: https://coolticket-server.herokuapp.com/
+[localhost:8080]: http://localhost:8080/
+[badge-standard]: https://cdn.rawgit.com/standard/standard/master/badge.svg
+[standard-style]: https://github.com/standard/standard
