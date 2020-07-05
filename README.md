@@ -80,6 +80,7 @@ More info in the swagger documentation [Live Here][live]
 ## Getting started
 
 - Be sure to setup `docker-compose` and have `git`.
+- Run this:
 
 ```sh
 > git clone https://github.com/Israel-Laguan/coolticket-server.git
@@ -87,7 +88,7 @@ More info in the swagger documentation [Live Here][live]
 > docker-compose up
 ```
 
-Enter [localhost:8080][] in a browser for the Swagger documentation of the server.
+- Enter [localhost:8080][] in a browser for the Swagger documentation of the server.
 
 Not a fan of Docker or need more information? Visit the [installation instructions](docs/INSTALLATION.md) to learn more about how to setup your PC for run the server!
 

@@ -8,16 +8,16 @@
   - [Set enviromental variables](#set-enviromental-variables)
   - [Troubleshooting](#troubleshooting)
 
-> I assume you are using Linux or Mac, but it's similar in Windows. At the end there is a [FAQ](#troubleshooting) if you ran into knwo issues.
+> I assume you are using Linux or Mac, but it's similar in Windows. At the end there is a [FAQ](#troubleshooting) if you ran into known issues.
 
-First of all you have to clone the code using git (also you can just [download the code][])
+First of all you have to clone the code using git (also you can just [download the code][]).
 
 ```sh
 > git clone https://github.com/Israel-Laguan/coolticket-server.git
 > cd coolticket-server
 ```
 
-To get the Node server running locally we have 2 options, the long and the short. The short one is to go fancy and use Docker 🐋, in that case [go here](#quick-start). For a complete experience with Node, go to the [Detailed Installation](#detailed-installation).
+To get the Node server running locally we have 2 options, the long and the short. The short one is to go fancy and use Docker 🐋, in that case go to [the next section](#quick-start). For a complete experience with Node, go to the [Detailed Installation](#detailed-installation).
 
 ## Quick Start
 
