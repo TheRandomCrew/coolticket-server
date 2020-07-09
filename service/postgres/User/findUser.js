@@ -13,7 +13,7 @@ module.exports = async (key = '', value = '') => {
       }
       user = res.data[0]
     })
-    logger.info(`User ${user} found!`)
+    logger.info(`User ${JSON.stringify(user)} found!`)
     return {
       ok: true,
       data: user

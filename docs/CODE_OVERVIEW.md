@@ -6,6 +6,7 @@
   - [Error Handling](#error-handling)
   - [Authentication](#authentication)
   - [Databases](#databases)
+  - [Basic Requests](#basic-requests)
 
 ## Interesting Dependencies
 
@@ -41,3 +42,26 @@ I decided to use Postgres as my databases as it is a modern, opern sourced and p
 I defined some migrations to bootstrap a new server, you can use it by running `npm run set-db:dev` and have the migrations and seed run.
 
 For databases I recommend using Heroku Free Tier. If you want to check the changes in DBs, I recommend [pgweb](https://pgweb-demo.herokuapp.com/).
+
+## Basic Requests
+
+- GET `/ping`
+
+```sh
+curl https://coolticket-server.herokuapp.com/ping
+```
+
+- POST `/api/v1/auth/signup`
+
+```sh
+curl --data-urlencode "name=Israel Antonio Rosales Laguan" \
+  -d "email=user@mail.com&password=5236987410." \
+  https://coolticket-server.herokuapp.com/api/v1/auth/signup
+```
+
+- POST `/api/v1/auth/login`
+
+```sh
+curl -d "email=user@mail.com&password=5236987410." \
+  https://coolticket-server.herokuapp.com/api/v1/auth/login
+```

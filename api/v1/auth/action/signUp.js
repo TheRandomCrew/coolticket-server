@@ -52,11 +52,7 @@ const postSignUp = async (req, res) => {
     return res.status(201).json({
       ok: true,
       msg: 'user registered successfully',
-      data: {
-        id: data._id,
-        name: data.name,
-        email: data.email
-      }
+      data
     })
   } catch (error) {
     logger.error(error)
