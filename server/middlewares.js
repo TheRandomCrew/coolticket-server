@@ -13,7 +13,7 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8383',
   'http://localhost:3000',
-  'https://coolticket.herokuapp.com'
+  'https://coolticket-server.herokuapp.com'
 ]
 
 const productionURL = process.env.PRODUCTION_URL
