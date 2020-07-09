@@ -13,7 +13,7 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8383',
   'http://localhost:3000',
-  'https://coolticket-server.herokuapp.com'
+  'https://coolticket.herokuapp.com'
 ]
 
 const productionURL = process.env.PRODUCTION_URL
@@ -27,7 +27,8 @@ const originUndefined = (req, _, next) => {
   }
   if (
     req.headers.host === 'localhost:8080' ||
-    req.headers.host === 'localhost:8383'
+    req.headers.host === 'localhost:8383' ||
+    req.headers.host === 'localhost:3000'
   ) {
     req.headers.origin = 'http://' + req.headers.host
   }
