@@ -10,7 +10,7 @@ module.exports = (app) => {
     process.env.PORT || process.env.PORT_HTTP || 8383
   )
   const httpsPort = normalizePort(
-    process.env.PORT || process.env.PORT_HTTPS || 8081
+    process.env.PORT || process.env.PORT_HTTPS || 8080
   )
   http
     .createServer(app)
