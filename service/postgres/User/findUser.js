@@ -13,6 +13,7 @@ module.exports = async (key = '', value = '') => {
       }
       user = res.data[0]
     })
+    if (!user) throw Error('The user requested is not in the DB')
     logger.info(`User ${JSON.stringify(user)} found!`)
     return {
       ok: true,

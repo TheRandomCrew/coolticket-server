@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 
+const roles = ['SYSTEM', 'ADMIN', 'USER']
 const services = require('../../../services')
 
 const { findUser, logger, secret } = services
@@ -12,7 +13,8 @@ const postLogIn = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(422).json({
       ok: false,
-      msg: 'Request is well-formed, however, due to semantic errors it is unable to be processed. Validation errors.',
+      msg:
+        'Request is well-formed, however, due to semantic errors it is unable to be processed. Validation errors.',
       errors: errors.array()
     })
   }
@@ -22,6 +24,7 @@ const postLogIn = async (req, res) => {
   try {
     const { ok, data } = await findUser('email', email)
 
+    logger.info(`User ${JSON.stringify(data)} found!`)
     if (!ok) {
       throw Error(data)
     }
@@ -30,9 +33,11 @@ const postLogIn = async (req, res) => {
       return res.status(404).json({
         ok: false,
         msg: 'email not found on DB',
-        errors: [{
-          msg: 'email not found'
-        }]
+        errors: [
+          {
+            msg: 'email not found'
+          }
+        ]
       })
     }
 
@@ -42,13 +47,17 @@ const postLogIn = async (req, res) => {
       return res.status(403).json({
         ok: false,
         msg: 'Password for given email is not correct',
-        errors: [{
-          msg: 'assword for given email is not correct'
-        }]
+        errors: [
+          {
+            msg: 'assword for given email is not correct'
+          }
+        ]
       })
     }
 
-    const token = jwt.sign({ email, role: data.role }, secret, { expiresIn: 86400 })
+    const token = jwt.sign({ email, role: data.id_usertype }, secret, {
+      expiresIn: 86400
+    })
 
     return res.status(200).json({
       ok: true,
@@ -57,20 +66,16 @@ const postLogIn = async (req, res) => {
         expires: 86400,
         email: email,
         token: token,
-        role: data.role
+        role: roles[data.id_usertype - 1]
       }
     })
   } catch (error) {
     logger.error(error)
-    return res.status(500).json(
-      {
-        ok: false,
-        msg: 'there was a problem log in a user.',
-        errors: [
-          { error: error.message }
-        ]
-      }
-    )
+    return res.status(500).json({
+      ok: false,
+      msg: 'there was a problem log in a user.',
+      errors: [{ error: error.message }]
+    })
   }
 }
 

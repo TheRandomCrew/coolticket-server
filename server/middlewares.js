@@ -28,7 +28,7 @@ const originUndefined = (req, _, next) => {
       req.headers.origin = 'https://' + req.headers.host
     }
   }
-  logger.info(`headers ${req.headers}`)
+  logger.info(`headers ${JSON.stringify(req.headers)}`)
   if (
     req.headers.host === 'localhost:8080' ||
     req.headers.host === 'localhost:8383' ||
@@ -108,7 +108,7 @@ module.exports = (app) => {
     app.use(errorHandler({ log: errorNotification }))
   }
 
-  function errorNotification(err, str, req) {
+  function errorNotification (err, str, req) {
     const title = `Error in ${req.method} ${req.url}`
     logger.error(title, str, err.msg)
   }
