@@ -50,6 +50,7 @@ module.exports = (app) => {
     cors({
       origin: (origin, next) => {
         if (process.env.NODE_ENV === 'test') return next()
+        logger.info(`${origin} incoming request: ${allowedOrigins.indexOf(origin)}`)
         if (allowedOrigins.indexOf(origin) > -1) {
           next(null, true)
         } else {
