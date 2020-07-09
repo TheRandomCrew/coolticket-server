@@ -25,6 +25,7 @@ const originUndefined = (req, _, next) => {
       'Hi, you are visiting the service locally? If this was a CORS the origin header should not be undefined'
     )
   }
+  logger.info(`origin ${origin}`)
   if (
     req.headers.host === 'localhost:8080' ||
     req.headers.host === 'localhost:8383' ||
