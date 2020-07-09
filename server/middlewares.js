@@ -60,7 +60,6 @@ module.exports = (app) => {
           next(Error(msg))
         }
       },
-      credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: [
         'Origin',
@@ -69,8 +68,7 @@ module.exports = (app) => {
         'Accept',
         'Authorization',
         'X-Access-Token'
-      ],
-      preflightContinue: true
+      ]
     })
   )
 
