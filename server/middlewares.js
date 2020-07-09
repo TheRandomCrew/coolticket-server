@@ -24,17 +24,17 @@ const originUndefined = (req, _, next) => {
     logger.error(
       'Hi, you are visiting the service locally? If this was a CORS the origin header should not be undefined'
     )
+    if (req.headers.host === 'coolticket-server.herokuapp.com') {
+      req.headers.origin = 'https://' + req.headers.host
+    }
   }
-  logger.info(`origin ${req.headers.origin}`)
+  logger.info(`headers ${req.headers}`)
   if (
     req.headers.host === 'localhost:8080' ||
     req.headers.host === 'localhost:8383' ||
     req.headers.host === 'localhost:3000'
   ) {
     req.headers.origin = 'http://' + req.headers.host
-  }
-  if (req.headers.host === 'coolticket-server.herokuapp.com') {
-    req.headers.origin = 'https://' + req.headers.host
   }
   next()
 }
@@ -51,7 +51,9 @@ module.exports = (app) => {
     cors({
       origin: (origin, next) => {
         if (process.env.NODE_ENV === 'test') return next()
-        logger.info(`${origin} incoming request: ${allowedOrigins.indexOf(origin)}`)
+        logger.info(
+          `${origin} incoming request: ${allowedOrigins.indexOf(origin)}`
+        )
         if (allowedOrigins.indexOf(origin) > -1) {
           next(null, true)
         } else {
@@ -106,7 +108,7 @@ module.exports = (app) => {
     app.use(errorHandler({ log: errorNotification }))
   }
 
-  function errorNotification (err, str, req) {
+  function errorNotification(err, str, req) {
     const title = `Error in ${req.method} ${req.url}`
     logger.error(title, str, err.msg)
   }
