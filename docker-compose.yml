@@ -12,6 +12,7 @@ services:
       PRODUCTION_URL: https://coolticket.herokuapp.com
     ports:
       - 8080:8080
+      - 8383:8383
     depends_on:
       db:
         condition: service_healthy

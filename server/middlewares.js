@@ -12,6 +12,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8383',
+  'http://127.0.0.1:8383',
   'http://localhost:3000',
   'https://coolticket-server.herokuapp.com'
 ]
