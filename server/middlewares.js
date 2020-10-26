@@ -13,7 +13,6 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8383',
   'http://127.0.0.1:8383',
-  'http://localhost:3000',
   'https://coolticket-server.herokuapp.com'
 ]
 
@@ -32,8 +31,7 @@ const originUndefined = (req, _, next) => {
   logger.info(`headers ${JSON.stringify(req.headers)}`)
   if (
     req.headers.host === 'localhost:8080' ||
-    req.headers.host === 'localhost:8383' ||
-    req.headers.host === 'localhost:3000'
+    req.headers.host === 'localhost:8383'
   ) {
     req.headers.origin = 'http://' + req.headers.host
   }

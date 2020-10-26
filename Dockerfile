@@ -15,4 +15,6 @@ RUN npm install -g
 
 COPY . ./
 
+CMD npm run set-db:dev
+
 CMD npm run dev

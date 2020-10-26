@@ -7,18 +7,18 @@ module.exports = async ({ email = '', name = '', password = '', userType = 'USER
   try {
     if (!email || !password) throw Error('You must provide email and password!')
     const hashedPassword = await bcrypt.hash(password, 8)
-    let newUser = {}
-    await query(queries.createUser, {
-      email,
-      name,
-      userType: userType === 'ADMIN' ? 2 : 3,
-      password: hashedPassword
-    }, (err, res) => {
+    let newUser = {
+    email,
+    name,
+    userType: userType === 'ADMIN' ? 2 : 3,
+    password: hashedPassword
+  }
+    await query(queries.createUser, newUser, (err, res) => {
       if (err) {
         logger.warn(err)
         throw Error(err)
       }
-      newUser = { ...res, password: 'secret' }
+      newUser.password= 'secret'
     })
     logger.info(`User ${JSON.stringify(newUser)} created!`)
     return {

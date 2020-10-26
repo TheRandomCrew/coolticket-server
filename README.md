@@ -79,18 +79,37 @@ More info in the swagger documentation [Live Here][live]
 
 ## Getting started
 
+### Running the project
+
 - Be sure to setup `docker-compose` and have `git`.
 - Run this:
 
 ```sh
 > git clone https://github.com/Israel-Laguan/coolticket-server.git
 > cd coolticket-server
-> docker-compose up
+> docker-compose build && docker-compose up
 ```
 
-- Enter [localhost:8080][] in a browser for the Swagger documentation of the server.
+- Enter [localhost:8383][] in a browser for the Swagger documentation of the server.
 
 Not a fan of Docker or need more information? Visit the [installation instructions](docs/INSTALLATION.md) to learn more about how to setup your PC for run the server!
+
+### Playing with swagger
+
+1. First make sure you are conected and see the swagger docs correctly
+![ok](docs/ok.gif)
+
+2. Now change the server to use development environment
+![local](docs/local.gif)
+
+3. If you don't have an user create one in `signup/` endpoint
+![signup](docs/signup.gif)
+
+4. Now you enter your credentials in `login/` endpoint to get your token
+![login](docs/login.gif)
+
+5. With your new token you can make all sort of requests! Yay! 🥳
+![request](docs/request.gif)
 
 ## Code Overview
 

@@ -4,7 +4,8 @@ const { findTickets, logger } = services
 
 const getTicketAll = async (_req, res) => {
   try {
-    const { ok, data } = await findTickets()
+    const response = await findTickets()
+    const { ok, data } = response.data
     if (ok && data.length > 0) {
       return res.status(200).json({
         ok: true,

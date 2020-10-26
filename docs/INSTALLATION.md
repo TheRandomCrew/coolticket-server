@@ -30,6 +30,7 @@ To get the Node server running locally we have 2 options, the long and the short
 ```
 
 - Enter [localhost:8080][] in a browser to see the application running, including a test DB from the `Dockerfile`.
+- If you change `docker-compose.yml` o `Dockerfile` you must run `docker-compose build` and then `docker-compose up`
 
 Note that you'll get a dev environment focused in developing Node code, with a test DB in postgres already connected.
 
@@ -40,12 +41,14 @@ So you want to feel the metal and install stuff (like a `node_modules` heavy fol
 ### Pre Requisites
 
 - [ ] `npm` v6.14 +
-- [ ] `node` v12.18 +
+- [ ] `node` v12.19 +
 - [ ] A good terminal
 - [ ] A Text Editor like VSCode
 - [ ] A browser like Firefox or Chrome, or a client like Postman/Insomnia for testing
 
 ### Short Version
+
+If you use `nvm` just type `nvm use`, or download the required version of node.
 
 ```sh
 > yarn install
@@ -80,7 +83,7 @@ At this point we should have 3 sets of DBs credentials in the `.env` file. If yo
 
 - `npm run dev` to start the local server
 
-- Enter [localhost:8080][] in a browser to see the Swagger documentation for the server.
+- Enter [localhost:8383][] in a browser to see the Swagger documentation for the server.
 
 ## Set enviromental variables
 
@@ -134,6 +137,10 @@ If you ran in another issue, don't hesitate to reach to the [Issues Section][iss
 - While migrating `NODE_TLS_REJECT_UNAUTHORIZED is not a program... etc` in Windows, i.e. not recognizing env variables.
 
 > Decomment the line in `.npmrc` file provided. Check [this issue][npmrc issue] for more info.
+
+- I can not enter `localhost:8080`
+
+> Ussually is because you don't have a valid SSL certificate in the root or is used by any other service. Please try `localhost:8383` instead.
 
 - \<Add your question here>
 

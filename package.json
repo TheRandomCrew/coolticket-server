@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "pm2-runtime start ./server/ecosystem.config.js --env production",
-    "dev": "NODE_ENV=development nodemon -r dotenv/config index.js",
+    "dev": "cross-env-shell NODE_TLS_REJECT_UNAUTHORIZED=0 NODE_ENV=development nodemon -r dotenv/config index.js",
     "test": "cross-env NODE_ENV=test standard 'api/**/*.js' 'server/**/*.js' 'service/**/*.js' 'util/**/*.js' && jest --coverage -w=100%",
     "test:watch": "cross-env NODE_ENV=test jest --watch -w=100%",
     "lint": "eslint . --cache -f table",
