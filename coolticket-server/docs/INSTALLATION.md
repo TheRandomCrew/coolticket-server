@@ -79,7 +79,7 @@ Now you should have all the folders and files to run the server, the only proble
 
 At this point we should have 3 sets of DBs credentials in the `.env` file. If you need more with this check [this info](#set-enviromental-variables). When you are positive that DBs are working and you can connect, let's move to migration and seed.
 
-- `set-db:dev` to leave DB ready for seeding. Note that this will wipe all existing data if it exists. It apply all the migrations: create tables, seed them and be ready for action!
+- `npm run set-db:dev` to leave DB ready for seeding. Note that this will wipe all existing data if it exists. It apply all the migrations: create tables, seed them and be ready for action!
 
 - `npm run dev` to start the local server
 
