@@ -79,7 +79,7 @@ Now you should have all the folders and files to run the server, the only proble
 
 At this point we should have 3 sets of DBs credentials in the `.env` file. If you need more with this check [this info](#set-enviromental-variables). When you are positive that DBs are working and you can connect, let's move to migration and seed.
 
-- `set-db:dev` to leave DB ready for seeding. Note that this will wipe all existing data if it exists. It apply all the migrations: create tables, seed them and be ready for action!
+- `npm run set-db:dev` to leave DB ready for seeding. Note that this will wipe all existing data if it exists. It apply all the migrations: create tables, seed them and be ready for action!
 
 - `npm run dev` to start the local server
 
@@ -89,9 +89,9 @@ At this point we should have 3 sets of DBs credentials in the `.env` file. If yo
 
 As we are professional here we need at least 3 environments: Development (for modify code at will), Test (to check if everything is working fine), and Production (The one that clients will use). Each one needs a different database (you can use the same DB for dev and test *if you know what are you doing*).
 
-This project uses `dotenv` and `cross-env` to manage enviromental variables and avoid exposing valuable info like the credentials of your server. We can put all the secret info in the file `.env` as it is not shared in public (note in [.gitignore](.gitignore) we are not sharing this file). But it also implies that you have to take care of add the variables' values yourself.
+This project uses `dotenv` and `cross-env` to manage enviromental variables and avoid exposing valuable info like the credentials of your server. We can put all the secret info in the file `.env` as it is not shared in public (note in [.gitignore](../.gitignore) we are not sharing this file). But it also implies that you have to take care of add the variables' values yourself.
 
-Thats why you can see in [.env example](.env.example) that we have 4 set of variables:
+Thats why you can see in [.env example](../.env.example) that we have 4 set of variables:
 
 - Development Database credentials, starting with `DEV_DB_`.
 - Test Database credentials, starting with `TEST_DB_`.
@@ -124,7 +124,7 @@ JWT_SECRET= # Here you can add a super hard to figure out secret for JWT
 PRODUCTION_URL= # Add a link to whitelist, expected https://coolticket.herokuapp.com
 ```
 
-> Don't put anything in the file [.env-example](.env-example), it is only for copy=>paste=>change-name to `.env`. If you add variables to this file and commit you are exposing your secret to the world, including to some hackers hungry for free DBs!
+> Don't put anything in the file [.env.example](../.env.example), it is only for copy=>paste=>change-name to `.env`. If you add variables to this file and commit you are exposing your secret to the world, including to some hackers hungry for free DBs!
 
 ---
 
