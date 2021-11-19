@@ -1,6 +1,6 @@
-const CRUD = require('../../../service/CRUD')
-const secret = require('../../../service/config')
-const logger = require('../../../util/logger')
+const CRUD = require('../../service/CRUD')
+const secret = require('../../service/config')
+const logger = require('../../util/logger')
 
 module.exports = {
   logger,
