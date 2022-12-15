@@ -1,4 +1,4 @@
-const { createLogger, format, transports } = require('../coolticket-server/node_modules/winston')
+const { createLogger, format, transports } = require('winston')
 const fs = require('fs')
 
 const level = process.env.LOG_LEVEL || 'debug'
